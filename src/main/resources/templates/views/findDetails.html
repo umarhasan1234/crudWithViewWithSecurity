@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Employee Data</title>
 </head>
 <body>
-	<a href="http://localhost:9090/">Add Employee</a>
+	<a href="http://localhost:9090/vpt/user/">Add Employee</a>
     <h1>Employee Data</h1>
    <table  border>
 		<tr>
@@ -26,8 +26,8 @@
 			<td th:text="${user.mob}"></td>
 			<td th:text="${user.position}"></td>
 			
-			<td><a th:href="@{/update/(id=${user.id})}">update</a></td>
-			<td><a th:href="@{/delete/(id=${user.id})}">delete</a></td>
+			<td><a th:href="@{/vpt/user/update/(id=${user.id})}">update</a></td>
+			<td><a th:href="@{/vpt/user/delete/(id=${user.id})}">delete</a></td>
 		</tr>
 
 	</table>

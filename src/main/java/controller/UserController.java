@@ -23,14 +23,15 @@ import com.example.request.UserRequest;
 import com.example.service.UserService;
 
 @RestController
-//@RequestMapping("/vpt/user")
+@RequestMapping("/vpt/user")
 public class UserController {
 	
 	@Autowired
 	private UserService userService;
 	
-	@RequestMapping("/")
+	@GetMapping("/")
 	public ModelAndView defaultMethod(ModelAndView modelAndView) {
+		System.out.println("hiii");
 		modelAndView.setViewName("/views/vpt_form");
 				return modelAndView;
 	}

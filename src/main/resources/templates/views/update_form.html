@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <title>Update User Information</title>
 </head>
 <body>
     <h1>Update User Information</h1>
-   <form th:object="${user}" th:action="@{/updateUser}" method="post">
+   <form th:object="${user}" th:action="@{/vpt/user/updateUser}" method="post">
     <label for="userId">User Id:</label>
     <input type="number" id="userId" name="id" th:field="*{id}" readonly="readonly" /><br><br>
 

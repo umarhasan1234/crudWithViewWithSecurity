@@ -1,0 +1,5 @@
+SignUp url-----> localhost:9090/signUp/
+login url------>localhost:9090/login/
+get User url---->localhosts:9090/vpt/user/get
+save user url--->localhost:9090/vpt/user/
+database url---->localhost:9090/vpt/database/getDatabaseProperties
