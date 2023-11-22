@@ -1,21 +1,22 @@
 package com.example.authentication;
 
-import com.example.entity.SignUp;
+import com.example.entity.Login;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.Collections;
 
 public class UserDetailsImpl implements UserDetails{
 
-    private SignUp signUp;
-    public UserDetailsImpl(SignUp signUp){
+    private Login signUp;
+    public UserDetailsImpl(Login signUp){
         this.signUp=signUp;
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        return Collections.emptyList();
     }
 
     @Override

@@ -1,11 +1,10 @@
 package model;
 
-import com.example.entity.SignUp;
-import com.example.repository.SignUpRepository;
+import com.example.entity.Login;
+import com.example.repository.LoginRepository;
 import com.example.request.SignUpRequest;
 import com.example.service.SignUpService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +12,7 @@ import org.springframework.stereotype.Service;
 public class SignUpServiceImpl implements SignUpService {
 
     @Autowired
-    private SignUpRepository signUpRepository;
+    private LoginRepository signUpRepository;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -27,7 +26,7 @@ public class SignUpServiceImpl implements SignUpService {
       @Override
     public void saveSignUpData(SignUpRequest signUpRequest) {
         String password=passwordEncoder.encode(signUpRequest.getSignUpPassword());
-        SignUp s=new SignUp();
+        Login s=new Login();
         s.setSignUpid(signUpRequest.getSingUpId());
         s.setSignUpUserName(signUpRequest.getUserNameOrEmail());
         s.setSignUpPassword(password);

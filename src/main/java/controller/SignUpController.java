@@ -16,12 +16,12 @@ public class SignUpController {
     @Autowired(required = true)
     private SignUpService signUpService;
 
-   // @PostMapping("/")
-//    public ResponseEntity<String> saveUser(@RequestBody SignUpRequest signUpRequest){
-//
-//        signUpService.saveSignUpData(signUpRequest);
-//        return  new ResponseEntity<String>("Sign up  successfull", HttpStatus.OK);
-//    }
+    @PostMapping("/")
+    public ResponseEntity<String> saveUser(@RequestBody SignUpRequest signUpRequest){
+
+        signUpService.saveSignUpData(signUpRequest);
+        return  new ResponseEntity<String>("Sign up  successfull", HttpStatus.OK);
+    }
 
     @GetMapping("/")
     public ModelAndView signUpUser(ModelAndView modelAndView){

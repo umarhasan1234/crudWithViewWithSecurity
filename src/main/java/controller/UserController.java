@@ -22,7 +22,7 @@ import com.example.entity.User;
 import com.example.request.UserRequest;
 import com.example.service.UserService;
 
-@RestController
+@Controller
 @RequestMapping("/vpt/user")
 public class UserController {
 	

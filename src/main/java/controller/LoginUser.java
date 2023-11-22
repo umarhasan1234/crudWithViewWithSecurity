@@ -3,21 +3,29 @@ package controller;
 import com.example.authentication.CustomUserDetailsService;
 import com.example.authentication.JwtUtill;
 import com.example.request.LoginRequest;
+import com.example.responce.LoginResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import org.springframework.boot.web.server.Cookie;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.jmx.export.annotation.ManagedOperation;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletResponse;
 @RestController
 @RequestMapping("/login")
 public class LoginUser {
 
+    public String token;
+    private static final String JWT_COOKIE_NAME = "jwtToken";
     @Autowired
     private CustomUserDetailsService customUserDetailsService;
 
@@ -29,35 +37,47 @@ public class LoginUser {
 
     @GetMapping("/")
     public ModelAndView loginUser(ModelAndView modelAndView){
+
+        System.out.println("login user call");
        modelAndView.setViewName("/views/login");
         return modelAndView;
     }
 
-    @RequestMapping(value = "/token", method = RequestMethod.POST)
-    public ModelAndView generateToken(@ModelAttribute("loginRequest")LoginRequest loginRequest,ModelAndView modelAndView) throws Exception {
+
+    @RequestMapping(value = "/token",method = RequestMethod.POST)
+    public ResponseEntity<?> generateToken(@RequestBody LoginRequest loginRequest, HttpServletResponse response) throws Exception {
         System.out.println(loginRequest.getUserNameOrEmail());
         System.out.println(loginRequest.getLoginPassword());
 
         try{
-            System.out.println("try ke andar wala");
+
             this.authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getUserNameOrEmail(),loginRequest.getLoginPassword()));
-            System.out.println("try ke niche wala ");
+
 
         }catch (UsernameNotFoundException e){
             e.printStackTrace();
             throw new Exception("User name not found");
         }
-        System.out.println("custom ko call krne se pahale");
+
         UserDetails userDetails = this.customUserDetailsService.loadUserByUsername(loginRequest.getUserNameOrEmail());
-        System.out.println("custom ko call krte time ");
+
         System.out.println(userDetails.getUsername());
         System.out.println(userDetails.getPassword());
 
         System.out.println("token for this user\n");
-        String token = this.jwtUtill.generateToken(userDetails);
+        token= this.jwtUtill.generateToken(userDetails);
         System.out.println(token);
-modelAndView.setViewName("/views/findDetails");
-return modelAndView;
+
+        LoginResponse loginResponse=new LoginResponse();
+        loginResponse.setToken(token);
+
+
+    //    modelAndView.setViewName("/views/index");
+
        // return new ResponseEntity<>("token generate successfully", HttpStatus.ACCEPTED);
+
+   return ResponseEntity.ok(new LoginResponse(token));
     }
+
+
 }

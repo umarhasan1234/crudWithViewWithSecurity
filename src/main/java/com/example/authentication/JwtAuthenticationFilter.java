@@ -23,33 +23,42 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter  {
     @Autowired
     private CustomUserDetailsService customUserDetailsService;
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+   protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
 
 
         String requestTokenHeader = request.getHeader("Authorization");
+        System.out.println("request token header call");
+        System.out.println(requestTokenHeader);
+
+
         String username=null;
         String jwtToken=null;
         if(requestTokenHeader!=null && requestTokenHeader.startsWith("Bearer ")){
+            System.out.println("request token header call");
             jwtToken=requestTokenHeader.substring(7);
 
             try {
+
                 username = jwtUtill.extractUsername(jwtToken);
             }catch (Exception e){
                 e.printStackTrace();
             }
-
             UserDetails userDetails = this.customUserDetailsService.loadUserByUsername(username);
             if (username!=null && SecurityContextHolder.getContext().getAuthentication()==null){
                 UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
-            usernamePasswordAuthenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-           SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
+                usernamePasswordAuthenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
 
 
             }else {
                 System.out.println("token is not validate!!!!!!");
             }
+
+        }
+        else {
+            System.out.println("jwt token does not begin with bearer");
         }
 
-filterChain.doFilter(request,response);
-    }
+        filterChain.doFilter(request,response);
+   }
 }

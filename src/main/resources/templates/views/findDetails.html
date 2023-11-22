@@ -27,7 +27,10 @@
 			<td th:text="${user.position}"></td>
 			
 			<td><a th:href="@{/vpt/user/update/(id=${user.id})}">update</a></td>
-			<td><a th:href="@{/vpt/user/delete/(id=${user.id})}">delete</a></td>
+			<td><a th:href="@{/vpt/user/delete/(id=${user.id})}"
+			onClick="if(!(confirm('Are you sure you want to delete that employee'))) return false">
+	`			delete
+			</a></td>
 		</tr>
 
 	</table>
