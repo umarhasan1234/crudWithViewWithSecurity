@@ -1,28 +1,15 @@
 package controller;
 
-import java.util.List;
-
-import javax.persistence.metamodel.SetAttribute;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.ModelAndView;
-
 import com.example.entity.User;
 import com.example.request.UserRequest;
 import com.example.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
-@Controller
+import java.util.List;
+
+@RestController
 @RequestMapping("/vpt/user")
 public class UserController {
 	
@@ -46,12 +33,12 @@ public class UserController {
 	}
 	
 	@GetMapping("/get")
-		public ModelAndView getData(ModelAndView modelAndView){
+		public List<User> getData(ModelAndView modelAndView){
 		List<User> user=userService.getUserData();
-		modelAndView.addObject("user", user);
-		modelAndView.setViewName("/views/findDetails");
-		return modelAndView;
-			
+//		modelAndView.addObject("user", user);
+//		modelAndView.setViewName("/views/findDetails");
+//		return modelAndView;
+			return user;
 		}
 	
 	@RequestMapping("/update/")

@@ -28,10 +28,10 @@ public class SignUpController {
         modelAndView.setViewName("/views/signUpForm");
         return modelAndView;
     }
-    @RequestMapping("/save")
+    @PostMapping("/save")
     public ModelAndView saveSignUpUser(@ModelAttribute("signUpRequest") SignUpRequest signUpRequest,ModelAndView modelAndView){
         signUpService.saveSignUpData(signUpRequest);
-        modelAndView.setViewName("/views/signUpForm");
+        modelAndView.setViewName("/views/index");
         return modelAndView;
     }
 

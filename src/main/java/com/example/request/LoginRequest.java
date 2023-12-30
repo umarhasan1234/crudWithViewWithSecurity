@@ -13,4 +13,20 @@ import lombok.ToString;
 public class LoginRequest {
     String userNameOrEmail;
     String loginPassword;
+
+    public String getLoginPassword() {
+        return loginPassword;
+    }
+
+    public void setLoginPassword(String loginPassword) {
+        this.loginPassword = loginPassword;
+    }
+
+    public String getUserNameOrEmail() {
+        return userNameOrEmail;
+    }
+
+    public void setUserNameOrEmail(String userNameOrEmail) {
+        this.userNameOrEmail = userNameOrEmail;
+    }
 }

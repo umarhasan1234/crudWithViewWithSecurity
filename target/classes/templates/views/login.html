@@ -7,22 +7,55 @@
 </head>
 <body>
 <h1>Login</h1>
-<form action="/login/token" method="post">
+<form id="loginForm" >
 
     <label for="userNameOrEmail">Email:</label>
     <input type="text" id="userNameOrEmail" name="userNameOrEmail" required><br><br>
 
-    <label for="signUpPassword">Password:</label>
-    <input type="text" id="signUpPassword" name="loginPassword" required><br><br>
+    <label for="loginPassword">Password:</label>
+    <input type="password" id="loginPassword" name="loginPassword" required><br><br>
 
-
-    <input type="submit" value="Login"><br><br>
+    <input type="button" value="Login" onclick="performLogin()"><br><br>
     <a href="http://localhost:9090/signUp/"> Sign Up</a>
 
-
-
 </form>
+<script>
+    function performLogin() {
+        debugger;
+        var username = document.getElementById("userNameOrEmail").value;
+        var password = document.getElementById("loginPassword").value;
 
+        var loginRequest = {
+            userNameOrEmail: username,
+            loginPassword: password
+        };
+
+        fetch('http://localhost:9090/login/token', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(loginRequest)
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            // Get the token from the response headers
+            const tokenCookie = response.headers.get('SetCookie');
+            const token = tokenCookie && tokenCookie.split(';')[0].split('=')[1];
+
+            // Store the token or use it as needed
+            console.log('Token:', token);
+
+            // Redirect to the index page or perform any other actions
+            window.location.href = 'http://localhost:9090/views/index';
+        })
+        .catch(error => {
+            console.log('Error:', error);
+        });
+    }
+</script>
 
 </body>
 </html>
