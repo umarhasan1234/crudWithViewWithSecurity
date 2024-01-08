@@ -1,18 +1,22 @@
 package model;
 
-import java.nio.file.attribute.UserPrincipalNotFoundException;
-import java.util.List;
-
-import javax.persistence.EntityNotFoundException;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import com.example.entity.User;
 import com.example.repository.UserRepository;
 import com.example.request.UserRequest;
 import com.example.service.UserService;
+import jakarta.persistence.EntityNotFoundException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import java.util.List;
 
+//import com.example.entity.User;
+//import com.example.repository.UserRepository;
+//import com.example.request.UserRequest;
+//import com.example.service.UserService;
+//import org.springframework.beans.factory.annotation.Autowired;
+//import org.springframework.stereotype.Service;
+//import javax.persistence.EntityNotFoundException;
+//import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService{

@@ -19,7 +19,7 @@ import static javax.crypto.Cipher.SECRET_KEY;
 @Component
 public class JwtUtill {
 
-   // private static final long EXPIRATION_TIME = 864000000;//10 days
+    private static final long EXPIRATION_TIME = 864000000;//10 days
    private String SECRET_KEY="secret";
 
     public String extractUsername(String token) {
@@ -40,9 +40,9 @@ public class JwtUtill {
 
 
         try {
-            System.out.println("Token received: " + token);
+         //   System.out.println("Token received: " + token);
             Claims claims = Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token).getBody();
-            System.out.println("Claims extracted successfully: " + claims);
+        //    System.out.println("Claims extracted successfully: " + claims);
             return claims;
         } catch (Exception e) {
             System.err.println("Error extracting claims from token: " + e.getMessage());
@@ -60,22 +60,22 @@ public class JwtUtill {
 //    private Boolean isTokenExpired(String token) {
 //        return extractExpiration(token).before(new Date());
 //    }
-public void logTokenExpirationDetails(String token) {
-    Date expirationDate = extractExpiration(token);
-    Date currentTime = new Date();
-
-    System.out.println("Current Time: " + currentTime);
-    System.out.println("Token Expiration Time: " + expirationDate);
-
-    long timeRemaining = expirationDate.getTime() - currentTime.getTime();
-    System.out.println("Time Remaining (milliseconds): " + timeRemaining);
-    System.out.println("Time Remaining (minutes): " + (timeRemaining / (60 * 1000)));
-}
+//public void logTokenExpirationDetails(String token) {
+//    Date expirationDate = extractExpiration(token);
+//    Date currentTime = new Date();
+//
+//    System.out.println("Current Time: " + currentTime);
+//    System.out.println("Token Expiration Time: " + expirationDate);
+//
+//    long timeRemaining = expirationDate.getTime() - currentTime.getTime();
+//    System.out.println("Time Remaining (milliseconds): " + timeRemaining);
+//    System.out.println("Time Remaining (minutes): " + (timeRemaining /(60*1000)));
+//}
 
 
     private Boolean isTokenExpired(String token) {
         Date expirationDate = extractExpiration(token);
-        logTokenExpirationDetails(token); // Log expiration details for debugging
+      //  logTokenExpirationDetails(token); // Log expiration details for debugging
         return expirationDate.before(new Date());
     }
 
@@ -90,7 +90,7 @@ public void logTokenExpirationDetails(String token) {
                 .setClaims(claims)
                 .setSubject(userName)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() +(24*60*60)))
+                .setExpiration(new Date(System.currentTimeMillis() +EXPIRATION_TIME))
                 .signWith(SignatureAlgorithm.HS256, SECRET_KEY).compact();
     }
 

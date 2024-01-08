@@ -1,86 +1,16 @@
-<!-- INDEX PAGE -->
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>INDEX PAGE</title>
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <title>Document</title>
 </head>
 <body>
-<h1>INDEX</h1>
+<h1>This is index page</h1>
 
-<button onclick="navigateToAddEmployee()">Add Employee</button>
-<button onclick="navigateToFindAllUsers()">Find all User</button>
+<a href="http://localhost:9090/vpt/user/">Add Employee</a>
+<a href="http://localhost:9090/vpt/user/get"> find all User</a>
 
-<script>
-    function navigateToAddEmployee() {
-        const token = localStorage.getItem('token');
-        if (token) {
-
-        const decodedToken = parseJwt(token);
-        if(decodedToken && decodedToken.exp && decodedToken.exp*1000<Date.now()){
-        alert("token has expired. Please log in again .");
-        window.location.href="/login/";
-        return;
-        }
-            // Make a request to the protected endpoint with the token in the headers
-            $.ajax({
-                url: 'http://localhost:9090/vpt/user/',
-                type: 'GET',
-                headers: {
-                    'Authorization': 'Bearer ' + token
-                },
-                success: function(response) {
-                    // Handle the success response or redirect to the desired page
-                    console.log(response);
-                    window.location.href = 'http://localhost:9090/vpt/user/';
-                },
-                error: function(error) {
-                    // Handle the error response
-                    console.error(error);
-                }
-            });
-        } else {
-            // Handle the case when the token is not available
-            alert('Token not available. Please log in.');
-        }
-    }
-
-// Helper function to parse JWT
-function parseJwt(token) {
-    try {
-        return JSON.parse(atob(token.split('.')[1]));
-    } catch (e) {
-        return null;
-    }
-}
-    function navigateToFindAllUsers() {
-        const token = localStorage.getItem('token');
-        if (token) {
-            // Make a request to the protected endpoint with the token in the headers
-            $.ajax({
-                url: 'http://localhost:9090/vpt/user/get',
-                type: 'GET',
-                headers: {
-                    'Authorization': 'Bearer ' + token
-                },
-                success: function(response) {
-                    // Handle the success response or redirect to the desired page
-                    console.log(response);
-                    window.location.href = 'http://localhost:9090/vpt/user/get';
-                },
-                error: function(error) {
-                    // Handle the error response
-                    console.error(error);
-                }
-            });
-        } else {
-            // Handle the case when the token is not available
-            alert('Token not available. Please log in.');
-        }
-    }
-</script>
 </body>
 </html>

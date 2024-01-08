@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,7 +8,7 @@
 </head>
 <body>
 <h1>Login</h1>
-<form id="loginForm" >
+<form id="loginForm" method="POST" >
 
     <label for="userNameOrEmail">Email:</label>
     <input type="text" id="userNameOrEmail" name="userNameOrEmail" required><br><br>
@@ -15,46 +16,145 @@
     <label for="loginPassword">Password:</label>
     <input type="password" id="loginPassword" name="loginPassword" required><br><br>
 
-    <input type="button" value="Login" onclick="performLogin()"><br><br>
+    <input type="submit" value="Login" ><br><br>
     <a href="http://localhost:9090/signUp/"> Sign Up</a>
 
 </form>
+<!--<script>-->
+
+<!--   // const headersWithToken;-->
+<!--    function performLogin() {-->
+<!--        debugger;-->
+<!--        var username = document.getElementById("userNameOrEmail").value;-->
+<!--        var password = document.getElementById("loginPassword").value;-->
+
+<!--        var loginRequest = {-->
+<!--            userNameOrEmail: username,-->
+<!--            loginPassword: password-->
+<!--        };-->
+
+<!--       fetch('http://localhost:9090/login/token', {-->
+<!--    method: 'POST',-->
+<!--    headers: {-->
+<!--        'Content-Type': 'application/json',-->
+<!--    },-->
+<!--    body: JSON.stringify(loginRequest)-->
+<!--})-->
+<!--.then(response => {-->
+<!--    if (!response.ok) {-->
+<!--        throw new Error('Network response was not ok');-->
+<!--    }-->
+
+<!--    // Parse the JSON response-->
+<!--    return response.json();-->
+<!--})-->
+<!--.then(data => {-->
+<!--    // Get the token from the response-->
+<!--    const token = data.token;-->
+
+<!--    // Store the token or use it as needed-->
+<!--    console.log('Token:', token);-->
+<!-- const headersWithToken = {-->
+<!--        'Content-Type': 'application/json',-->
+<!--        'Authorization': `Bearer ${token}`,-->
+<!--    };-->
+<!-- // Redirect to the index page or perform any other actions-->
+
+<!--  //  window.location.href = 'http://localhost:9090/views/index';-->
+
+<!--     fetch("//localhost:9090/index1", {-->
+<!--    method: 'GET',-->
+<!--      headers: headersWithToken-->
+<!--    })-->
+<!--    .then(response => {-->
+<!--    			  if (!response.ok) {-->
+<!--    			  console.log("status not ok");-->
+<!--        throw new Error('Network response was not ok');-->
+<!--    }-->
+
+<!--			//	if (response.status === 200) {-->
+<!--			else{-->
+<!--				console.log("status ok");-->
+<!--				const redirectUrl = "//localhost:9090/index1";-->
+<!--				window.location.href = redirectUrl;-->
+<!--				console.log("url ok");-->
+<!--				}-->
+
+<!--		})-->
+
+<!--.catch(error => {-->
+<!--    console.error('Error during login:', error);-->
+<!--    // Handle errors, such as displaying an error message to the user-->
+<!--});-->
+
+<!--})-->
+
+<!--.catch(error => {-->
+<!--    console.error('Error during login:', error);-->
+<!--    // Handle errors, such as displaying an error message to the user-->
+<!--});-->
+
+<!--    }-->
+<!--</script>-->
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script>
-    function performLogin() {
-        debugger;
-        var username = document.getElementById("userNameOrEmail").value;
-        var password = document.getElementById("loginPassword").value;
+    document.getElementById("loginForm").addEventListener("submit", function (event) {
+        event.preventDefault();
 
-        var loginRequest = {
-            userNameOrEmail: username,
+        const userId = document.getElementById("userNameOrEmail").value;
+        const password = document.getElementById("loginPassword").value;
+
+        const url = "http://localhost:9090/login/token";
+        const requestBody = JSON.stringify({
+            userNameOrEmail: userId,
             loginPassword: password
-        };
+        });
 
-        fetch('http://localhost:9090/login/token', {
-            method: 'POST',
+        axios.post(url, requestBody, {
             headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(loginRequest)
+                "Content-Type": "application/json"
+            }
         })
         .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
+            const data = response.data;
+            if (data.token) {
+                localStorage.setItem('token', data.token);
+                console.log("User token:", data.token);
+
+
+                const headers = {
+                    Authorization: "Bearer " + data.token
+                };
+                if (data.token !== null) {
+
+                    axios.get("http://localhost:9090/index1", { headers, responseType: 'text' })
+                        .then(response => {
+
+                        console.log("response find");
+
+                                const redirectUrl = "http://localhost:9090/index1";
+                                window.location.href = redirectUrl;
+                                console.log("status find url");
+
+                        })
+                        .catch(error => {
+                            console.error("An error occurred:", error);
+                        });
+                } else {
+                    console.error("Login failed.");
+                }
+            } else {
+                console.error("Login failed. Please check your credentials.");
             }
-            // Get the token from the response headers
-            const tokenCookie = response.headers.get('SetCookie');
-            const token = tokenCookie && tokenCookie.split(';')[0].split('=')[1];
-
-            // Store the token or use it as needed
-            console.log('Token:', token);
-
-            // Redirect to the index page or perform any other actions
-            window.location.href = 'http://localhost:9090/views/index';
         })
         .catch(error => {
-            console.log('Error:', error);
+            console.error("An error occurred:", error);
         });
-    }
+    });
 </script>
 
 </body>

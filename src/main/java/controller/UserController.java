@@ -18,7 +18,7 @@ public class UserController {
 	
 	@GetMapping("/")
 	public ModelAndView defaultMethod(ModelAndView modelAndView) {
-		System.out.println("hiii");
+
 		modelAndView.setViewName("/views/vpt_form");
 				return modelAndView;
 	}

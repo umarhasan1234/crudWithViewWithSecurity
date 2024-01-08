@@ -8,7 +8,6 @@ public class TestingClass {
 
     @GetMapping("/test")
     public String test(){
-        System.out.println("this is testing Class");
-        return "run testing clas successfully";
+               return "run testing clas successfully";
     }
 }

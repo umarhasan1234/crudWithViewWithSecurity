@@ -9,9 +9,9 @@ import java.util.Collections;
 
 public class UserDetailsImpl implements UserDetails{
 
-    private Login signUp;
-    public UserDetailsImpl(Login signUp){
-        this.signUp=signUp;
+    private Login login;
+    public UserDetailsImpl(Login login){
+        this.login=login;
     }
 
     @Override
@@ -21,12 +21,12 @@ public class UserDetailsImpl implements UserDetails{
 
     @Override
     public String getPassword() {
-        return signUp.getSignUpPassword();
+        return login.getSignUpPassword();
     }
 
     @Override
     public String getUsername() {
-        return signUp.getSignUpUserName();
+        return login.getSignUpUserName();
     }
 
     @Override

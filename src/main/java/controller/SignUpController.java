@@ -1,5 +1,6 @@
 package controller;
 
+
 import com.example.request.SignUpRequest;
 import com.example.service.SignUpService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-@RestController
+@Controller
 @RequestMapping("/signUp")
 public class SignUpController {
 
@@ -29,9 +30,9 @@ public class SignUpController {
         return modelAndView;
     }
     @PostMapping("/save")
-    public ModelAndView saveSignUpUser(@ModelAttribute("signUpRequest") SignUpRequest signUpRequest,ModelAndView modelAndView){
+    public ModelAndView saveSignUpUser(@ModelAttribute("signUpRequest") SignUpRequest signUpRequest, ModelAndView modelAndView){
         signUpService.saveSignUpData(signUpRequest);
-        modelAndView.setViewName("/views/index");
+        modelAndView.setViewName("/views/login");
         return modelAndView;
     }
 
